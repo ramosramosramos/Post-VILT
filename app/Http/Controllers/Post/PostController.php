@@ -86,7 +86,7 @@ class PostController extends DBQueryListener
     public function indexTrash(PostsServices $service)
     {
         // $this->listenQuery();
-        $posts = $service->getPost(false);
+        $posts = $service->getPost(false,true);
         return inertia('Posts/Trash', ['posts' => $posts]);
     }
 

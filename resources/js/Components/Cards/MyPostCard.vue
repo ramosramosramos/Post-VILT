@@ -32,7 +32,7 @@
                 <ul v-if="isTrashed" class="flex flex-col absolute right-0 w-max  bg-gray-900 rounded-sm">
 
                     <small class="px-2 py-1 text-gray-500">Actions</small>
-                    <MyPostLinks method="post" :href="route('posts.forceDestroy', post.id)" name="Delete permanently" />
+                    <MyPostLinks method="post" :href="route('posts.restore', post.id)" name="Restore this post" />
                     <MyPostLinks method="post" :href="route('posts.forceDestroy', post.id)" name="Delete permanently" />
 
 

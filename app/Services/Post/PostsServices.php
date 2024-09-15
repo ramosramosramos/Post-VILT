@@ -7,9 +7,9 @@ use Illuminate\Support\Carbon;
 
 class PostsServices
 {
-    public function getPost($isPinned = false, $withTrashed = false)
+    public function getPost($isPinned = false, $onlyTrashed = false)
     {
-        $type = $withTrashed ? Post::withTrashed() : Post::withoutTrashed();
+        $type = $onlyTrashed ? Post::onlyTrashed() : Post::withoutTrashed();
         $posts = $type->select(['id', 'user_id', 'caption', 'content', 'created_at'])
             ->where('user_id', request()->user()->id)
             ->where('isPinned', $isPinned)

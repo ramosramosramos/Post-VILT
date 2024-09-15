@@ -8,6 +8,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('posts/trash', [PostController::class, 'indexTrash'])->name('posts.indexTrash');
     Route::resource('posts', PostController::class);
+    Route::post('posts/{id}/restore', [PostController::class, 'restore'])->name('posts.restore');
     Route::post('posts/{id}/forceDestroy', [PostController::class, 'forceDestroy'])->name('posts.forceDestroy');
     Route::post('posts/{post}/pinPost', [PostController::class, 'pinPost'])->name('posts.pinPost');
     Route::post('posts/{post}/unpinPost', [PostController::class, 'unpinPost'])->name('posts.unpinPost');
