@@ -1,6 +1,6 @@
 <template>
     <div class="w-[90%] m-auto mt-1 flex flex-col gap-2 ">
-        <span><small>Total reactions :{{ reactions.total }}</small></span>
+        <span><small>Total reactions : {{ reactions.total }}</small></span>
         <form @submit.prevent="handleReaction" class="flex gap-2">
             <button @click="form.type = 'heart'">
                 <span class="material-symbols-outlined">
