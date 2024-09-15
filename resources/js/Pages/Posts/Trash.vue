@@ -13,7 +13,7 @@
 
             <!-- <h1>{{ posts. }}</h1> -->
         </div>
-        <MyPostCard :posts="posts" />
+        <MyPostCard :posts="posts"  :isTrashed="true" />
     </section>
 </template>
 <script setup>

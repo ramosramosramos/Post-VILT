@@ -17,21 +17,27 @@
                     </span>
 
                 </summary>
-                <ul class="flex flex-col absolute right-0 w-max  bg-gray-900 rounded-sm">
+                <ul v-if="!isTrashed" class="flex flex-col absolute right-0 w-max  bg-gray-900 rounded-sm">
                     <MyPostLinks v-if="!isPinned" method="post" :href="route('posts.pinPost',post.id)" name="Pin this post" />
                     <MyPostLinks v-if="isPinned" method="post" :href="route('posts.unpinPost',post.id)" name="Unpin this post" />
                     <small class="px-2 py-1 text-gray-500">Actions</small>
                     <MyPostLinks :href="route('posts.edit', post.id)" name="Edit post" />
                     <MyPostLinks method="delete" :href="route('posts.destroy', post.id)" name="Move to trash" />
                     <MyPostLinks method="post" :href="route('posts.forceDestroy', post.id)" name="Delete permanently" />
-
                     <small class="px-2 py-1 text-gray-500">Services</small>
                     <MyPostLinks name="Edit privacy" />
                     <MyPostLinks name="Send to" />
 
+                </ul>
+                <ul v-if="isTrashed" class="flex flex-col absolute right-0 w-max  bg-gray-900 rounded-sm">
+
+                    <small class="px-2 py-1 text-gray-500">Actions</small>
+                    <MyPostLinks method="post" :href="route('posts.forceDestroy', post.id)" name="Delete permanently" />
+                    <MyPostLinks method="post" :href="route('posts.forceDestroy', post.id)" name="Delete permanently" />
 
 
                 </ul>
+
             </details>
 
         </div>
@@ -58,6 +64,7 @@ import MyPostLinks from '../Links/MyPostLinks.vue';
 defineProps({
     posts: Array,
     isPinned: false,
+    isTrashed:false,
 });
 
 
