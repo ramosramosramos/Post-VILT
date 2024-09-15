@@ -15,6 +15,7 @@
     <h1 v-if="$page.props.flash.restored"
     class=" text-gray-200 px-2  py-2">
     {{ $page.props.flash.restored }}</h1>
+
     <h1 v-if="$page.props.flash.pinned"
     class=" text-gray-200 px-2  py-2">
     {{ $page.props.flash.pinned }}</h1>

@@ -90,14 +90,15 @@ class PostController extends DBQueryListener
         return inertia('Posts/Trash', ['posts' => $posts]);
     }
 
-    public function restore($id)
+    public function restore($id,PostsServices $service)
     {
+        $service->find($id)->restore();
+        return redirect()->back()->with("restored", "The post has been restored.");
 
     }
-    public function forceDestroy($id)
+    public function forceDestroy($id, PostsServices $service)
     {
-        $post = Post::withTrashed()->findOrFail($id);
-        $post->forceDelete();
+        $service->find($id)->forceDelete();
         return redirect()->back()->with("deleted", "The post is now permanently deleted.");
     }
 

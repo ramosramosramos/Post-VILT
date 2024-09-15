@@ -38,6 +38,7 @@ class HandleInertiaRequests extends Middleware
                 'welcome' => session('welcome'),
                 'deleted' => session('deleted'),
                 'updated' => session('updated'),
+                'restored' => session('restored'),
                 'pinned' => session('pinned'),
             ]
         ];
