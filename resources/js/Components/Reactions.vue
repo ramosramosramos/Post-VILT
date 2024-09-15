@@ -1,11 +1,13 @@
 <template>
-    <div class="w-[90%] m-auto mt-1 ">
-        <form @submit.prevent="handleReaction" class="flex gap-6">
+    <div class="w-[90%] m-auto mt-1 flex flex-col gap-2 ">
+        <span><small>Total reactions :{{ reactions.total }}</small></span>
+        <form @submit.prevent="handleReaction" class="flex gap-2">
             <button @click="form.type = 'heart'">
                 <span class="material-symbols-outlined">
                     favorite
                 </span>
-                <small v-if="reactions.heart>0">{{ reactions.heart }}</small>
+
+                <small v-if="reactions.heart>0">{{ reactions.heart }} </small>
             </button>
 
             <button @click="form.type = 'happy'">
@@ -18,6 +20,7 @@
                 <span class="material-symbols-outlined">
                     thumb_down
                 </span>
+
                 <small v-if="reactions.dislike>0">{{ reactions.dislike }}</small>
             </button>
 

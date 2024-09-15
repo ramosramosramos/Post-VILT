@@ -13,26 +13,9 @@ class PostsServices
         $time = $onlyTrashed ? 'deleted_at' : 'created_at';
 
         // Fetch posts based on trash status and pinned status
-        $postsQuery = $onlyTrashed ? Post::onlyTrashed() : Post::withoutTrashed();
+        $postsQuery = $onlyTrashed ? Post::onlyTrashed() : Post::withoutTrashed()->withReactionCounts();
 
-        $posts = $postsQuery->withCount([
-            'reactions as heart_count' => function ($query) {
-                $query->where('type', 'heart');
-            },
-            'reactions as happy_count' => function ($query) {
-                $query->where('type', 'happy');
-            },
-            'reactions as dislike_count' => function ($query) {
-                $query->where('type', 'dislike');
-            },
-            'reactions as mad_count' => function ($query) {
-                $query->where('type', 'mad');
-            },
-            'reactions as sad_count' => function ($query) {
-                $query->where('type', 'sad');
-            },
-            'reactions' // Total reactions count
-        ])
+        $posts = $postsQuery
         ->where('user_id', request()->user()->id)
         ->where('isPinned', $isPinned)
         ->latest()
@@ -71,3 +54,4 @@ class PostsServices
         return $post;
     }
 }
+

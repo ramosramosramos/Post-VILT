@@ -29,11 +29,25 @@ class Post extends Model
         return $this->morphMany(Reaction::class,'reactable');
     }
 
-    public function reactionCount($type = null)
+    public function scopeWithReactionCounts($query)
     {
-        if ($type) {
-            return $this->reactions()->where('type', $type)->count();
-        }
-        return $this->reactions()->count();
+        return $query->withCount([
+            'reactions as heart_count' => function ($query) {
+                $query->where('type', 'heart');
+            },
+            'reactions as happy_count' => function ($query) {
+                $query->where('type', 'happy');
+            },
+            'reactions as dislike_count' => function ($query) {
+                $query->where('type', 'dislike');
+            },
+            'reactions as mad_count' => function ($query) {
+                $query->where('type', 'mad');
+            },
+            'reactions as sad_count' => function ($query) {
+                $query->where('type', 'sad');
+            },
+            'reactions' // Total reactions count
+        ]);
     }
 }
