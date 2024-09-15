@@ -1,7 +1,7 @@
 <template>
 
     <div v-for="post in posts" :key="post.id"
-        class="w-[90%] m-auto mb-3  bg-gray-800 text-gray-400 px-2 rounded-md">
+        class=" overflow-hidden w-[90%] m-auto mb-3  bg-gray-800 text-gray-400 px-2 rounded-md">
         <!-- --------------------menu-------------------- -->
         <div :class="['w-[99%] m-auto flex py-1 '
             , { 'justify-between': isPinned }, { 'justify-end': !isPinned }]">
@@ -40,8 +40,9 @@
         <h1 class="text-[20px] text-center py-2 mb-3">{{ post.caption }}
 
         </h1>
-        <div class="w-[90%] min-h-[20vh] m-auto border-gray-700 border-[1px] rounded-sm">
-            <p class="text-sm px-2 py-2">{{ post.content }}</p>
+        <div class="  overflow-hidden  w-[90%] min-h-[20vh] m-auto border-gray-700 border-[1px] rounded-sm">
+
+            <p class="flex-wrap text-wrap break-words text-sm px-2 py-2">{{ post.content }}</p>
         </div>
         <Reactions />
 
