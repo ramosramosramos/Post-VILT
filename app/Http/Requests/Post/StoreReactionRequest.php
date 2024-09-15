@@ -3,13 +3,13 @@
 namespace App\Http\Requests\Post;
 
 use Illuminate\Foundation\Http\FormRequest;
-use PHPUnit\Framework\Constraint\IsTrue;
 
 class StoreReactionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
+
     public function authorize(): bool
     {
         return true;
@@ -20,9 +20,12 @@ class StoreReactionRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
+
     public function rules(): array
     {
+
         return [
+            'user_id'=>'required|integer',
             'type'=>'required|string',
             'reaction_id'=>'required|string',
             'reaction_type'=>'required|string',

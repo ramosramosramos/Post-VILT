@@ -29,13 +29,14 @@
                     sentiment_dissatisfied
                 </span>
             </button>
+
         </form>
 
     </div>
 </template>
 <script setup>
-import { useForm } from "@inertiajs/vue3";
-
+import { useForm, usePage } from "@inertiajs/vue3";
+const page = usePage();
 const props = defineProps({
     reactable_type: String,
     reactable_id: Number,
@@ -45,13 +46,17 @@ const props = defineProps({
 
 
 const form = useForm({
+    user_id:page.props.auth.user.id,
     type: '',// type of reactions heart||sad||mad etc.
     reactable_id: props.reactable_id,//post id or comment id
     reactable_type: props.reactable_type,// what type? is it post or comment?
 });
 
 const handleReaction = () => {
-form.post(route('posts.reaction'));
+
+        form.post(route('posts.reaction'));
+
+
 }
 
 </script>

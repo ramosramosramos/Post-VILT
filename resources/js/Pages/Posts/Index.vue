@@ -17,7 +17,7 @@
         <div v-if="pinnedPosts">
             <MyPostCard  reactable_type="post" :posts="pinnedPosts" :isPinned="true" />
         </div>
-        <MyPostCard  reactable_type="post" :posts="posts"  />
+        <MyPostCard  reactable_type="App\Models\Post" :posts="posts"  />
 
 
 

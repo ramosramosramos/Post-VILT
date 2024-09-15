@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Post;
 
-
+use App\Http\Requests\Post\StoreReactionRequest;
 use App\Models\Post;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Models\Reaction;
 use App\Services\DBQueryListener;
 use App\Services\Post\PostsServices;
 
@@ -54,6 +55,7 @@ class PostController extends DBQueryListener
     {
         $myPost = [
             'id' => $post->id,
+
             'caption' => $post->caption,
             'content' => $post->content,
         ];
@@ -86,11 +88,11 @@ class PostController extends DBQueryListener
     public function indexTrash(PostsServices $service)
     {
         // $this->listenQuery();
-        $posts = $service->getPost(false,true);
+        $posts = $service->getPost(false, true);
         return inertia('Posts/Trash', ['posts' => $posts]);
     }
 
-    public function restore($id,PostsServices $service)
+    public function restore($id, PostsServices $service)
     {
         $service->find($id)->restore();
         return redirect()->back()->with("restored", "The post has been restored.");
@@ -111,5 +113,26 @@ class PostController extends DBQueryListener
     {
         $service->isPinThePost($post);
         return redirect()->back()->with('pinned', "Post has been pinned successfully.");
+    }
+
+
+
+    public function storeReaction(StoreReactionRequest $request)
+    {
+        $this->listenQuery();
+
+        Reaction::create(
+            [
+                'user_id' => $request->user_id,
+                'reactable_id' => $request->reactable_id,
+                'reactable_type' => $request->reactable_type,
+                'type' => $request->type
+            ],
+
+        );
+
+        return redirect()->back();
+
+
     }
 }
