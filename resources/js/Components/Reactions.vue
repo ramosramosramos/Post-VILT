@@ -51,7 +51,7 @@ const form = useForm({
 });
 
 const handleReaction = () => {
-
+form.post(route('posts.reaction'));
 }
 
 </script>
