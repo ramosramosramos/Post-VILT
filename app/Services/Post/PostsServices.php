@@ -9,8 +9,10 @@ class PostsServices
 {
     public function getPost($isPinned = false, $onlyTrashed = false)
     {
+        $time= $onlyTrashed ? 'deleted_at':'created_at';
+        // dd($time);
         $type = $onlyTrashed ? Post::onlyTrashed() : Post::withoutTrashed();
-        $posts = $type->select(['id', 'user_id', 'caption', 'content', 'created_at'])
+        $posts = $type->select(['id', 'user_id', 'caption', 'content', $time])
             ->where('user_id', request()->user()->id)
             ->where('isPinned', $isPinned)
             ->latest()
@@ -20,7 +22,7 @@ class PostsServices
                 'user_id' => $post->user_id,
                 'caption' => $post->caption,
                 'content' => $post->content,
-                'created_at' => Carbon::parse($post->created_at)->diffForHumans(),
+                'time' => Carbon::parse($post->$time)->diffForHumans(),
             ]);
 
         return $posts;

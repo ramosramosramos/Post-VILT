@@ -34,8 +34,6 @@
                     <small class="px-2 py-1 text-gray-500">Actions</small>
                     <MyPostLinks method="post" :href="route('posts.restore', post.id)" name="Restore this post" />
                     <MyPostLinks method="post" :href="route('posts.forceDestroy', post.id)" name="Delete permanently" />
-
-
                 </ul>
 
             </details>
@@ -50,9 +48,9 @@
 
             <p class="flex-wrap text-wrap break-words text-sm px-2 py-2">{{ post.content }}</p>
         </div>
-        <Reactions />
+        <Reactions v-if="!isTrashed" />
 
-        <p class="mt-5"><small>Posted: {{ post.created_at }}</small></p>
+        <p class="mt-5"><small>{{isTrashed? 'Deleted:':'Posted:'}} {{ post.time }}</small></p>
     </div>
 
 </template>
