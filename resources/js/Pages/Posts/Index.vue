@@ -1,7 +1,7 @@
 <template>
 
     <Head title="Me" />
-    <section class=" min-h-[100vh]">
+    <section class=" min-h-[100svh]">
         <!-- ----------Link to add post----------- -->
         <!-- ----------Link to add post----------- -->
         <PageMessage />
@@ -15,9 +15,9 @@
             <!-- <h1>{{ posts. }}</h1> -->
         </div>
         <div v-if="pinnedPosts">
-            <MyPostCard :posts="pinnedPosts" :isPinned="true" />
+            <MyPostCard  reactable_type="post" :posts="pinnedPosts" :isPinned="true" />
         </div>
-        <MyPostCard :posts="posts" />
+        <MyPostCard  reactable_type="post" :posts="posts"  />
 
 
 

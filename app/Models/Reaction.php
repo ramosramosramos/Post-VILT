@@ -10,6 +10,8 @@ class Reaction extends Model
     use HasFactory;
     protected $fillable = [
         'user_id',
+        'reactable_id',
+        'reactable_type',
         'type',
     ];
 
