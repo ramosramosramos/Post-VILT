@@ -10,7 +10,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('posts', PostController::class);
 
      ///reaction
-     Route::post('posts/reaction', [PostController::class, 'storeReaction'])->name('posts.reaction');
+     Route::post('posts/reactions', [PostController::class, 'storeReaction'])->name('posts.reaction');
 
     Route::post('posts/{id}/restore', [PostController::class, 'restore'])->name('posts.restore');
     Route::post('posts/{id}/forceDestroy', [PostController::class, 'forceDestroy'])->name('posts.forceDestroy');

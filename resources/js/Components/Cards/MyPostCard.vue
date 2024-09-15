@@ -48,7 +48,11 @@
 
             <p class="flex-wrap text-wrap break-words text-sm px-2 py-2">{{ post.content }}</p>
         </div>
-        <Reactions v-if="!isTrashed" :reactable_type="reactable_type" :reactable_id="post.id" />
+        <Reactions v-if="!isTrashed"
+         :reactable_type="reactable_type"
+        :reactable_id="post.id"
+        :reactions="post.reactions"
+        />
 
         <p class="mt-5"><small>{{isTrashed? 'Deleted:':'Posted:'}} {{ post.time }}</small></p>
     </div>

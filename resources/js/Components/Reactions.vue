@@ -5,29 +5,34 @@
                 <span class="material-symbols-outlined">
                     favorite
                 </span>
+                <small v-if="reactions.heart>0">{{ reactions.heart }}</small>
             </button>
 
             <button @click="form.type = 'happy'">
                 <span class="material-symbols-outlined">
                     sentiment_very_satisfied
                 </span>
+                <small v-if="reactions.happy>0">{{ reactions.happy }}</small>
             </button>
             <button @click="form.type = 'dislike'">
                 <span class="material-symbols-outlined">
                     thumb_down
                 </span>
+                <small v-if="reactions.dislike>0">{{ reactions.dislike }}</small>
             </button>
 
             <button @click="form.type = 'mad'">
                 <span class="material-symbols-outlined">
                     sentiment_extremely_dissatisfied
                 </span>
+                <small v-if="reactions.mad>0">{{ reactions.mad }}</small>
             </button>
 
             <button @click="form.type = 'sad'">
                 <span class="material-symbols-outlined">
                     sentiment_dissatisfied
                 </span>
+                <small v-if="reactions.sad>0">{{ reactions.sad }}</small>
             </button>
 
         </form>
@@ -40,7 +45,7 @@ const page = usePage();
 const props = defineProps({
     reactable_type: String,
     reactable_id: Number,
-
+    reactions:Object
 });
 
 
@@ -54,7 +59,15 @@ const form = useForm({
 
 const handleReaction = () => {
 
-        form.post(route('posts.reaction'));
+    form.post(route('posts.reaction'), {
+        preserveScroll:true,
+        onError: (errors) => {
+            console.error(errors); // Handle errors
+        },
+        onSuccess: () => {
+
+        }
+    });
 
 
 }

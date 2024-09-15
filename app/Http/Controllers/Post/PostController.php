@@ -19,6 +19,7 @@ class PostController extends DBQueryListener
         // $this->listenQuery();
         $posts = $service->getPost();
         $pinnedPosts = $service->getPost(true);
+
         return inertia('Posts/Index', compact('posts', 'pinnedPosts'));
     }
 
@@ -119,16 +120,16 @@ class PostController extends DBQueryListener
 
     public function storeReaction(StoreReactionRequest $request)
     {
-        $this->listenQuery();
 
-        Reaction::create(
+  Reaction::updateOrCreate(
             [
                 'user_id' => $request->user_id,
                 'reactable_id' => $request->reactable_id,
                 'reactable_type' => $request->reactable_type,
-                'type' => $request->type
             ],
-
+            [
+                'type' => $request->type
+            ]
         );
 
         return redirect()->back();

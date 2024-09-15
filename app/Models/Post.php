@@ -28,4 +28,12 @@ class Post extends Model
     public function reactions(){
         return $this->morphMany(Reaction::class,'reactable');
     }
+
+    public function reactionCount($type = null)
+    {
+        if ($type) {
+            return $this->reactions()->where('type', $type)->count();
+        }
+        return $this->reactions()->count();
+    }
 }

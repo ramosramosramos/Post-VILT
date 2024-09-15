@@ -8,7 +8,7 @@ class DBQueryListener
 {
     public function listenQuery(){
         DB::listen(function ($query) {
-               return dd($query->sql);
+               return dd($query);
 
 
         });

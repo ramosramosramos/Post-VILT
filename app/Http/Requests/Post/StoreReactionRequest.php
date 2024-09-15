@@ -25,10 +25,10 @@ class StoreReactionRequest extends FormRequest
     {
 
         return [
-            'user_id'=>'required|integer',
-            'type'=>'required|string',
-            'reaction_id'=>'required|string',
-            'reaction_type'=>'required|string',
+            'user_id'=>'integer',
+            'type'=>'string',
+            'reaction_id'=>'string',
+            'reaction_type'=>'string',
         ];
     }
 }

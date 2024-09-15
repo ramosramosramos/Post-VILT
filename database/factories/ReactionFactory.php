@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Post;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,10 @@ class ReactionFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'user_id'=>random_int(1,12),
+            'reactable_id'=>9,
+            'reactable_type'=>'App\Models\Post',
+            'type'=>'mad',
         ];
     }
 }
