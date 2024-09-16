@@ -116,7 +116,6 @@ class PostController extends DBQueryListener
 
     public function storeReaction(StoreReactionRequest $request)
     {
-
         Reaction::updateOrCreate(
             [
                 'user_id' => $request->user_id,

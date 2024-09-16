@@ -58,8 +58,10 @@
         </div>
        <!-- -------------------Reactions here----------------------- -->
         <!-- -------------------Reactions here----------------------- -->
+      <div>
         <Reactions v-if="!isTrashed" :reactable_type="reactable_type" :reactable_id="post.id"
-            :reactions="post.reactions" />
+        :reactions="post.reactions" />
+      </div>
 
             <!-- --------------------comments and share------------------- -->
             <!-- --------------------comments and share------------------- -->
@@ -105,8 +107,9 @@ const form = useForm({});
 
 const handleShowPost = (id) => {
     form.get(route('posts.show', id), {
-        preserveScroll: true
-    });
+        preserveScroll: true,
+    },);
+
 }
 </script>
 

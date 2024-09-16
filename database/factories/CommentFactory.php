@@ -18,7 +18,7 @@ class CommentFactory extends Factory
     {
         return [
             'user_id'=>2,
-            'post_id'=>6,
+            'post_id'=>11,
             'contents'=>fake()->text(50)
         ];
     }
