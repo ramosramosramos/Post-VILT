@@ -1,8 +1,8 @@
 <template>
 
-    <div v-for="post in posts" :key="post.id" class=" overflow-hidden w-[90%] m-auto mb-3  bg-inherit
-         text-gray-400 border-[1px] border-gray-800
-         hover:border-gray-700 transition-all ease-in px-2 rounded-md">
+    <div v-for="post in posts" :key="post.id" class=" overflow-hidden w-[90%] m-auto mb-3  bg-gray-800
+         text-gray-400 border-[1px] border-gray-800 hover:scale-95 duration-300
+         hover:border-gray-700 transition-all ease-in-out px-2 rounded-md">
         <!-- --------------------menu-------------------- -->
         <div :class="['w-[99%] m-auto flex py-1 '
             , { 'justify-between': isPinned }, { 'justify-end': !isPinned }]">
@@ -49,8 +49,8 @@
         <h1 class="text-[20px] text-center py-2 mb-3">{{ post.caption }}
 
         </h1>
-        <div @click="handleShowPost(post.id)" class="  overflow-hidden  w-[90%] min-h-[20vh] m-auto border-gray-700 border-[1px] rounded-sm">
-
+        <div @click="handleShowPost(post.id)"
+            class="  overflow-hidden  w-[90%] min-h-[20vh] m-auto border-gray-700 border-[1px] rounded-sm">
 
             <p class="flex-wrap text-wrap break-words text-sm px-2 py-2">{{ post.content }}
             </p>
@@ -60,13 +60,18 @@
         <!-- -------------------Reactions here----------------------- -->
         <Reactions v-if="!isTrashed" :reactable_type="reactable_type" :reactable_id="post.id"
             :reactions="post.reactions" />
+
+            <!-- --------------------comments and share------------------- -->
+            <!-- --------------------comments and share------------------- -->
         <div class="flex justify-around flex-wrap m-5 gap-2">
 
             <div>
-                <span class=" mt-10 material-symbols-outlined">
-                    comment
-                </span>
-                <small class="m-1">Comments</small>
+                <button @click="toggleComment" class="">
+                    <span class=" mt-10  material-symbols-outlined">
+                        comment
+                    </span>
+                    <small class="m-1">Comments</small>
+                </button>
             </div>
             <div>
                 <span class=" mt-10 material-symbols-outlined">
@@ -75,7 +80,12 @@
                 <small class="m-1">Share</small>
             </div>
         </div>
+        <!-- ------------------comment section------------------ -->
+        <!-- ------------------comment section------------------ -->
+        <div v-if="openComment" class="bg-red-500 h-[100px]">
 
+
+        </div>
         <div class="flex justify-between">
             <p class="mt-5"><small>{{ isTrashed ? 'Deleted:' : 'Posted:' }} {{ post.time }}</small></p>
             <!-- ------------------privacy here ------------- -->
@@ -83,6 +93,7 @@
                 {{ post.privacy }}
             </span>
         </div>
+
     </div>
 
 </template>
@@ -90,9 +101,14 @@
 
 import Reactions from '@/Components/Reactions.vue';
 import { useForm } from '@inertiajs/vue3';
+import { ref } from 'vue';
 import MyPostLinks from '../Links/MyPostLinks.vue';
 
+const openComment = ref(false);
 
+const toggleComment = ()=>{
+openComment.value=!openComment.value;
+}
 
 defineProps({
     posts: Array,
@@ -102,9 +118,10 @@ defineProps({
 });
 const form = useForm({});
 
-const handleShowPost = (id)=>{
-    form.get(route('posts.show',id),{
-        preserveScroll:true
+
+const handleShowPost = (id) => {
+    form.get(route('posts.show', id), {
+        preserveScroll: true
     });
 }
 </script>
