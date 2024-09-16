@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\Reaction;
 use App\Models\User;
@@ -15,7 +16,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Reaction::factory(120)->create();
+        Comment::factory(12)->create();
+        // Reaction::factory(120)->create();
         // Post::factory(20)->create();
         // User::factory(10)->create();
 

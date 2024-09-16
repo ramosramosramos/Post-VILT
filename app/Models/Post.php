@@ -30,6 +30,7 @@ class Post extends Model
         return $this->morphMany(Reaction::class,'reactable');
     }
 
+
     public function scopeWithReactionCounts($query)
     {
         return $query->withCount([

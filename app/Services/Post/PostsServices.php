@@ -13,9 +13,10 @@ class PostsServices
         $time = $onlyTrashed ? 'deleted_at' : 'created_at';
 
         // Fetch posts based on trash status and pinned status
-        $postsQuery = $onlyTrashed ? Post::onlyTrashed() : Post::withoutTrashed()->withReactionCounts();
+        $postsQuery = $onlyTrashed ? Post::onlyTrashed() : Post::withoutTrashed()->with(['comments', 'user'])->withReactionCounts();
 
         $posts = $postsQuery
+
             ->where('user_id', request()->user()->id)
             ->where('isPinned', $isPinned)
             ->latest()
@@ -29,6 +30,14 @@ class PostsServices
                         'caption' => $post->caption,
                         'content' => $post->content,
                         'privacy' => $post->privacy,
+                        'comments' => $post->comments->map(function ($comment) {
+                            return [
+                                'id' => $comment->id,
+                                'content' => $comment->contents,
+                                'user_name' => $comment->user->name, // Get the comment owner's name
+                                'time' => Carbon::parse($comment->created_at)->diffForHumans(),
+                            ];
+                        }),
                         'time' => Carbon::parse($post->$time)->diffForHumans(),
                         'reactions' => [
                             'heart' => $post->heart_count,
@@ -37,7 +46,9 @@ class PostsServices
                             'mad' => $post->mad_count,
                             'sad' => $post->sad_count,
                             'total' => $post->reactions_count
-                        ]
+                        ],
+
+
                     ];
 
                 }
@@ -58,7 +69,9 @@ class PostsServices
     public function getMyPost(Post $post, $show = false)
     {
         $posts = $show ?
-            $posts = Post::withoutTrashed()->withReactionCounts()
+            $posts = Post::withoutTrashed()
+                ->with('comments')
+                ->withReactionCounts()
                 ->where('user_id', request()->user()->id)
                 ->where('id', $post->id)
                 ->get()
@@ -78,7 +91,8 @@ class PostsServices
                             'mad' => $post->mad_count,
                             'sad' => $post->sad_count,
                             'total' => $post->reactions_count
-                        ]
+                        ],
+                        'comments' => $post->comments
                     ];
 
                 })

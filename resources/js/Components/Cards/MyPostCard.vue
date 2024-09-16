@@ -56,36 +56,26 @@
             </p>
 
         </div>
-        <!-- -------------------Reactions here----------------------- -->
+       <!-- -------------------Reactions here----------------------- -->
         <!-- -------------------Reactions here----------------------- -->
         <Reactions v-if="!isTrashed" :reactable_type="reactable_type" :reactable_id="post.id"
             :reactions="post.reactions" />
 
             <!-- --------------------comments and share------------------- -->
             <!-- --------------------comments and share------------------- -->
-        <div class="flex justify-around flex-wrap m-5 gap-2">
 
-            <div>
-                <button @click="toggleComment" class="">
-                    <span class=" mt-10  material-symbols-outlined">
-                        comment
-                    </span>
-                    <small class="m-1">Comments</small>
-                </button>
-            </div>
-            <div>
-                <span class=" mt-10 material-symbols-outlined">
+
+
+            <div class="w-[90%] m-auto">
+                <span class=" mt-2 mb-4 material-symbols-outlined">
                     share
                 </span>
                 <small class="m-1">Share</small>
             </div>
-        </div>
+
         <!-- ------------------comment section------------------ -->
         <!-- ------------------comment section------------------ -->
-        <div v-if="openComment" class="bg-red-500 h-[100px]">
-
-
-        </div>
+        <CommentSection :comments="post.comments" :post_id="post.id" :user_id="post.user_id"  />
         <div class="flex justify-between">
             <p class="mt-5"><small>{{ isTrashed ? 'Deleted:' : 'Posted:' }} {{ post.time }}</small></p>
             <!-- ------------------privacy here ------------- -->
@@ -101,14 +91,8 @@
 
 import Reactions from '@/Components/Reactions.vue';
 import { useForm } from '@inertiajs/vue3';
-import { ref } from 'vue';
 import MyPostLinks from '../Links/MyPostLinks.vue';
-
-const openComment = ref(false);
-
-const toggleComment = ()=>{
-openComment.value=!openComment.value;
-}
+import CommentSection from '../CommentSection.vue';
 
 defineProps({
     posts: Array,

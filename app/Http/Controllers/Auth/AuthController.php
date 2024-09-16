@@ -33,4 +33,6 @@ class AuthController
         return redirect()->route('posts.index')
         ->with("welcome","Welcome back,Add more posts");
     }
+
+    
 }
