@@ -56,7 +56,7 @@ class PostController extends DBQueryListener
     {
         $myPost = [
             'id' => $post->id,
-
+            'privacy' => $post->privacy,
             'caption' => $post->caption,
             'content' => $post->content,
         ];

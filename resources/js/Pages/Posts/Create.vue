@@ -18,13 +18,7 @@
             <TextAreaField label="Content" v-model="form.content" :error="form.errors.content" />
 
       <div class="w-[90%] flex flex-col m-auto mb-5">
-        <label class="text-gray-400">Privacy</label>
-        <select v-model="form.privacy" class="bg-inherit w-[100px] text-gray-500 cursor-pointer focus:ring-gray-800 ">
-            <option class="bg-inherit" value="public">Public</option>
-            <option value="groups">Friends of friends</option>
-            <option value="group">Friends</option>
-            <option value="person">Only me</option>
-        </select>
+        <PrivacyField  v-model="form.privacy"/>
       </div>
 
             <div class="w-[90%] m-auto">
@@ -40,6 +34,7 @@ import PrimaryButton from '@/Components/Inputs/PrimaryButton.vue';
 import PageName from '@/Components/Labels/PageName.vue';
 import TextAreaField from "@/Components/Inputs/TextAreaField.vue"
 import TextField from "@/Components/Inputs/TextField.vue";
+import PrivacyField from '@/Components/Inputs/PrivacyField.vue';
 import { useForm } from '@inertiajs/vue3';
 defineOptions({
     layout: Layout,

@@ -25,6 +25,7 @@ class UpdatePostRequest extends FormRequest
             'user_id' => "required",
             'caption' => "required",
             'content' => "required|min:1",
+            'privacy'=>'nullable'
         ];
     }
 }
