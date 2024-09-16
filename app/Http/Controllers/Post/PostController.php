@@ -44,22 +44,18 @@ class PostController extends DBQueryListener
     /**
      * Display the specified resource.
      */
-    public function show(Post $post)
+    public function show(Post $post ,PostsServices $service)
     {
-        //
+        $posts = $service->getMyPost($post,true);
+        return inertia('Posts/Show', compact('posts'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Post $post)
+    public function edit(Post $post,PostsServices $service)
     {
-        $myPost = [
-            'id' => $post->id,
-            'privacy' => $post->privacy,
-            'caption' => $post->caption,
-            'content' => $post->content,
-        ];
+        $myPost = $service->getMyPost($post);
         return inertia('Posts/Edit', compact('myPost'));
     }
 
@@ -78,7 +74,7 @@ class PostController extends DBQueryListener
     public function destroy(Post $post)
     {
         $post->deleteOrFail();
-        return redirect()->back()->with("deleted", "Successfully move to trash.");
+        return redirect()->route('posts.index')->with("deleted", "Successfully move to trash.");
     }
 
 
@@ -102,7 +98,7 @@ class PostController extends DBQueryListener
     public function forceDestroy($id, PostsServices $service)
     {
         $service->find($id)->forceDelete();
-        return redirect()->back()->with("deleted", "The post is now permanently deleted.");
+        return redirect()->route('posts.index')->with("deleted", "The post is now permanently deleted.");
     }
 
     public function pinPost(Post $post, PostsServices $service)

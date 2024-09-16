@@ -9,6 +9,7 @@
         </div>
         <!-- --------------form to create post------------------ -->
         <!-- --------------form to create post------------------ -->
+
         <form @submit.prevent="handleCreate">
             <div class="w-[90%] m-auto rounded-sm">
                 <TextField label="Caption" placeholder="Title"

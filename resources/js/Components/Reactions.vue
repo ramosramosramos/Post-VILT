@@ -1,5 +1,5 @@
 <template>
-    <div class="w-[90%] m-auto mt-1 flex flex-col gap-2 ">
+    <div class="w-[90%]   m-auto  flex flex-col gap-2 ">
         <span><small>Total reactions : {{ reactions.total }}</small></span>
         <form @submit.prevent="handleReaction" class="flex gap-2">
             <button @click="form.type = 'heart'">
@@ -41,6 +41,7 @@
         </form>
 
     </div>
+
 </template>
 <script setup>
 import { useForm, usePage } from "@inertiajs/vue3";

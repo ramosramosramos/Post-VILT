@@ -22,7 +22,7 @@ class PostsServices
             ->get()
             ->map(function ($post) use ($time) {
 
-                if ($time=='created_at') {
+                if ($time == 'created_at') {
                     return [
                         'id' => $post->id,
                         'user_id' => $post->user_id,
@@ -47,6 +47,7 @@ class PostsServices
                     'user_id' => $post->user_id,
                     'caption' => $post->caption,
                     'content' => $post->content,
+
                     'time' => Carbon::parse($post->$time)->diffForHumans(),
                 ];
             });
@@ -54,6 +55,53 @@ class PostsServices
         return $posts;
     }
 
+    public function getMyPost(Post $post, $show = false)
+    {
+        $posts = $show ?
+            $posts = Post::withoutTrashed()->withReactionCounts()
+                ->where('user_id', request()->user()->id)
+                ->where('id', $post->id)
+                ->get()
+                ->map(function ($post) {
+
+                    return [
+                        'id' => $post->id,
+                        'user_id' => $post->user_id,
+                        'caption' => $post->caption,
+                        'content' => $post->content,
+                        'privacy' => $post->privacy,
+                        'time' => Carbon::parse($post->created_at)->diffForHumans(),
+                        'reactions' => [
+                            'heart' => $post->heart_count,
+                            'happy' => $post->happy_count,
+                            'dislike' => $post->dislike_count,
+                            'mad' => $post->mad_count,
+                            'sad' => $post->sad_count,
+                            'total' => $post->reactions_count
+                        ]
+                    ];
+
+                })
+
+            : $posts = [
+                'id' => $post->id,
+                'user_id' => $post->user_id,
+                'caption' => $post->caption,
+                'content' => $post->content,
+                'privacy' => $post->privacy,
+            ];
+
+
+
+
+
+
+
+        return $posts;
+
+
+
+    }
     public function isPinThePost(Post $post, $isPinned = false)
     {
         $post->update([
