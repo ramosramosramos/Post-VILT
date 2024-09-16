@@ -28,6 +28,7 @@ class PostsServices
                         'user_id' => $post->user_id,
                         'caption' => $post->caption,
                         'content' => $post->content,
+                        'privacy' => $post->privacy,
                         'time' => Carbon::parse($post->$time)->diffForHumans(),
                         'reactions' => [
                             'heart' => $post->heart_count,

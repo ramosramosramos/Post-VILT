@@ -7,10 +7,11 @@
             , { 'justify-between': isPinned }, { 'justify-end': !isPinned }]">
             <!-- -------------------- if there is pin post---------------- -->
             <!-- -------------------- if there is pin post---------------- -->
-            <h1 v-if="isPinned" class=" text-sm text-gray-400"> <span class="  text-gray-500 select-none rotate-[-50deg] material-symbols-outlined">
+            <h1 v-if="isPinned" class=" text-sm text-gray-400"> <span
+                    class="  text-gray-500 select-none rotate-[-50deg] material-symbols-outlined">
                     keep
                 </span> Pinned post</h1>
-            <details  class=" select-none relative z-50  open:text-yellow-500">
+            <details class=" select-none relative z-50  open:text-yellow-500">
                 <summary class=" list-none cursor-pointer hover:text-yellow-500 transition-all ease-in duration-150">
                     <span class="material-symbols-outlined ">
                         more_vert
@@ -18,8 +19,10 @@
 
                 </summary>
                 <ul v-if="!isTrashed" class="flex flex-col absolute right-0 w-max  bg-gray-900 rounded-sm">
-                    <MyPostLinks v-if="!isPinned" method="post" :href="route('posts.pinPost',post.id)" name="Pin this post" />
-                    <MyPostLinks v-if="isPinned" method="post" :href="route('posts.unpinPost',post.id)" name="Unpin this post" />
+                    <MyPostLinks v-if="!isPinned" method="post" :href="route('posts.pinPost', post.id)"
+                        name="Pin this post" />
+                    <MyPostLinks v-if="isPinned" method="post" :href="route('posts.unpinPost', post.id)"
+                        name="Unpin this post" />
                     <small class="px-2 py-1 text-gray-500">Actions</small>
                     <MyPostLinks :href="route('posts.edit', post.id)" name="Edit post" />
                     <MyPostLinks method="delete" :href="route('posts.destroy', post.id)" name="Move to trash" />
@@ -48,13 +51,16 @@
 
             <p class="flex-wrap text-wrap break-words text-sm px-2 py-2">{{ post.content }}</p>
         </div>
-        <Reactions v-if="!isTrashed"
-         :reactable_type="reactable_type"
-        :reactable_id="post.id"
-        :reactions="post.reactions"
-        />
+        <Reactions v-if="!isTrashed" :reactable_type="reactable_type" :reactable_id="post.id"
+            :reactions="post.reactions" />
 
-        <p class="mt-5"><small>{{isTrashed? 'Deleted:':'Posted:'}} {{ post.time }}</small></p>
+            <div class="flex justify-between">
+            <p class="mt-5"><small>{{ isTrashed ? 'Deleted:' : 'Posted:' }} {{ post.time }}</small></p>
+          <!-- ------------------privacy here ------------- -->
+            <span class=" mt-4 material-symbols-outlined">
+              {{ post.privacy }}
+            </span>
+        </div>
     </div>
 
 </template>
@@ -63,11 +69,13 @@
 import Reactions from '@/Components/Reactions.vue';
 import MyPostLinks from '../Links/MyPostLinks.vue';
 
+
+
 defineProps({
     posts: Array,
     isPinned: false,
-    isTrashed:false,
-    reactable_type:String,
+    isTrashed: false,
+    reactable_type: String,
 });
 
 

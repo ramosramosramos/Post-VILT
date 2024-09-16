@@ -88,7 +88,7 @@ class PostController extends DBQueryListener
 
     public function indexTrash(PostsServices $service)
     {
-        // $this->listenQuery();
+
         $posts = $service->getPost(false, true);
         return inertia('Posts/Trash', ['posts' => $posts]);
     }
@@ -121,7 +121,7 @@ class PostController extends DBQueryListener
     public function storeReaction(StoreReactionRequest $request)
     {
 
-  Reaction::updateOrCreate(
+        Reaction::updateOrCreate(
             [
                 'user_id' => $request->user_id,
                 'reactable_id' => $request->reactable_id,

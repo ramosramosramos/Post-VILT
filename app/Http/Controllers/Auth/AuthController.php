@@ -31,6 +31,6 @@ class AuthController
         $request->session()->regenerate();
 
         return redirect()->route('posts.index')
-        ->with("welcome","welcome, Welcome back,Add more posts");
+        ->with("welcome","Welcome back,Add more posts");
     }
 }

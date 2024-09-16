@@ -15,6 +15,7 @@ class Post extends Model
         'caption',
         'content',
         'isPinned',
+        'privacy',
     ];
 
     public function user(){
