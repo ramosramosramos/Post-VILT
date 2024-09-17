@@ -13,54 +13,43 @@ class PostsServices
         $time = $onlyTrashed ? 'deleted_at' : 'created_at';
 
         // Fetch posts based on trash status and pinned status
-        $postsQuery = $onlyTrashed ? Post::onlyTrashed() : Post::withoutTrashed()->with(['comments', 'user'])->withReactionCounts();
+        $postsQuery = $onlyTrashed ? Post::onlyTrashed() : Post::query();
 
+        // Load relationships and fields
+        $postsQuery = $postsQuery->with(['comments:id,post_id,contents,user_id,created_at', 'comments.user:id,name'])
+                                 ->select(['id', 'user_id', 'caption', 'content', 'privacy', 'created_at'])
+                                 ->withReactionCounts(); // Assuming this is defined in your Post model.
+
+        // Apply filters
         $posts = $postsQuery
-
             ->where('user_id', request()->user()->id)
             ->where('isPinned', $isPinned)
             ->latest()
             ->get()
             ->map(function ($post) use ($time) {
-
-                if ($time == 'created_at') {
-                    return [
-
-                        'id' => $post->id,
-                        'user_id' => $post->user_id,
-                        'caption' => $post->caption,
-                        'content' => $post->content,
-                        'privacy' => $post->privacy,
-                        'comments' => $post->comments->map(function ($comment) {
-                            return [
-                                'id' => $comment->id,
-                                'content' => $comment->contents,
-                                'user_name' => $comment->user->name, // Get the comment owner's name
-                                'time' => Carbon::parse($comment->created_at)->diffForHumans(),
-                            ];
-                        }),
-                        'time' => Carbon::parse($post->$time)->diffForHumans(),
-                        'reactions' => [
-                            'heart' => $post->heart_count,
-                            'happy' => $post->happy_count,
-                            'dislike' => $post->dislike_count,
-                            'mad' => $post->mad_count,
-                            'sad' => $post->sad_count,
-                            'total' => $post->reactions_count
-                        ],
-
-
-                    ];
-
-                }
-
                 return [
                     'id' => $post->id,
                     'user_id' => $post->user_id,
                     'caption' => $post->caption,
                     'content' => $post->content,
-
+                    'privacy' => $post->privacy,
+                    'comments' => $post->comments->map(function ($comment) {
+                        return [
+                            'id' => $comment->id,
+                            'content' => $comment->contents,
+                            'user_name' => $comment->user->name, // Get the comment owner's name
+                            'time' => Carbon::parse($comment->created_at)->diffForHumans(),
+                        ];
+                    }),
                     'time' => Carbon::parse($post->$time)->diffForHumans(),
+                    'reactions' => [
+                        'heart' => $post->heart_count ?? 0,
+                        'happy' => $post->happy_count ?? 0,
+                        'dislike' => $post->dislike_count ?? 0,
+                        'mad' => $post->mad_count ?? 0,
+                        'sad' => $post->sad_count ?? 0,
+                        'total' => $post->reactions_count ?? 0
+                    ],
                 ];
             });
 
