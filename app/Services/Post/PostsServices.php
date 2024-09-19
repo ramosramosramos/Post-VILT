@@ -7,7 +7,7 @@ use Illuminate\Support\Carbon;
 
 class PostsServices
 {
-    public function getPost($isPinned = false, $onlyTrashed = false)
+    public function getPost($isPinned = false, $onlyTrashed = false,$getAll=false)
     {
         // Determine the timestamp column to use based on the trash status
         $time = $onlyTrashed ? 'deleted_at' : 'created_at';
@@ -16,15 +16,18 @@ class PostsServices
         $postsQuery = $onlyTrashed ? Post::onlyTrashed() : Post::query();
 
         // Load relationships and fields
-        $postsQuery = $postsQuery->with(['comments:id,post_id,contents,user_id,created_at', 'comments.user:id,name'])
-                                 ->select(['id', 'user_id', 'caption', 'content', 'privacy', 'created_at'])
+        $postsQuery = $postsQuery->with(['comments:id,post_id,contents,user_id,created_at', 'comments.user:id,name','user:id,name'])
+                                 ->select(['id', 'user_id', 'caption', 'content', 'privacy', 'created_at',])
                                  ->withReactionCounts(); // Assuming this is defined in your Post model.
 
         // Apply filters
-        $posts = $postsQuery
-            ->where('user_id', request()->user()->id)
-            ->where('isPinned', $isPinned)
-            ->latest()
+        $posts = $postsQuery;
+        if($getAll==false){
+            $posts = $posts->where('user_id', request()->user()->id)
+            ->where('isPinned', $isPinned);
+        }
+
+            $posts = $posts->latest()
             ->get()
             ->map(function ($post) use ($time) {
                 return [
@@ -33,6 +36,7 @@ class PostsServices
                     'caption' => $post->caption,
                     'content' => $post->content,
                     'privacy' => $post->privacy,
+                    'name'=> $post->user->name ,
                     'comments' => $post->comments->map(function ($comment) {
                         return [
                             'id' => $comment->id,
@@ -73,6 +77,7 @@ class PostsServices
                         'caption' => $post->caption,
                         'content' => $post->content,
                         'privacy' => $post->privacy,
+
                         'time' => Carbon::parse($post->created_at)->diffForHumans(),
                         'reactions' => [
                             'heart' => $post->heart_count,
@@ -94,12 +99,6 @@ class PostsServices
                 'content' => $post->content,
                 'privacy' => $post->privacy,
             ];
-
-
-
-
-
-
 
         return $posts;
 
