@@ -43,7 +43,12 @@
             </details>
 
         </div>
+        <!-- ---------owner name-------------------- -->
+        <!-- ---------owner name-------------------- -->
 
+        <div class="w-[90%] m-auto">
+            <h1>{{ post.name }}</h1>
+        </div>
         <!-- --------------------captions and contents--------------------------- -->
         <!-- --------------------captions and contents--------------------------- -->
         <h1 class="text-[20px] text-center py-2 mb-3">{{ post.caption }}
@@ -56,28 +61,28 @@
             </p>
 
         </div>
-       <!-- -------------------Reactions here----------------------- -->
         <!-- -------------------Reactions here----------------------- -->
-      <div>
-        <Reactions v-if="!isTrashed" :reactable_type="reactable_type" :reactable_id="post.id"
-        :reactions="post.reactions" />
-      </div>
+        <!-- -------------------Reactions here----------------------- -->
+        <div>
+            <Reactions v-if="!isTrashed" :reactable_type="reactable_type" :reactable_id="post.id"
+                :reactions="post.reactions" />
+        </div>
 
-            <!-- --------------------comments and share------------------- -->
-            <!-- --------------------comments and share------------------- -->
+        <!-- --------------------comments and share------------------- -->
+        <!-- --------------------comments and share------------------- -->
 
 
 
-            <div class="w-[90%] m-auto">
-                <span class=" mt-2 mb-4 material-symbols-outlined">
-                    share
-                </span>
-                <small class="m-1">Share</small>
-            </div>
+        <div class="w-[90%] m-auto">
+            <span class=" mt-2 mb-4 material-symbols-outlined">
+                share
+            </span>
+            <small class="m-1">Share</small>
+        </div>
 
         <!-- ------------------comment section------------------ -->
         <!-- ------------------comment section------------------ -->
-        <CommentSection :comments="post.comments" :post_id="post.id" :user_id="post.user_id"  />
+        <CommentSection :comments="post.comments" :post_id="post.id" :user_id="post.user_id" />
         <div class="flex justify-between">
             <p class="mt-5"><small>{{ isTrashed ? 'Deleted:' : 'Posted:' }} {{ post.time }}</small></p>
             <!-- ------------------privacy here ------------- -->

@@ -18,6 +18,7 @@
         <MenuLink name="Public" :href="route('posts.public')" component="Posts/Public"/>
         <MenuLink name="My Post" :href="route('posts.index')" component="Posts/Index"/>
         <MenuLink name="Trash" :href="route('posts.indexTrash')" component="Posts/Trash" />
+        <MenuLink method="post" name="Logout" :href="route('auth.logout')" component="none" />
        </div>
 
         </aside>
