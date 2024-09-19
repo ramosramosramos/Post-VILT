@@ -82,7 +82,7 @@
 
         <!-- ------------------comment section------------------ -->
         <!-- ------------------comment section------------------ -->
-        <CommentSection :comments="post.comments" :post_id="post.id" :user_id="post.user_id" />
+        <CommentSection :comments="post.comments" :post_id="post.id" :user_id="$page.props.auth.user.id" />
         <div class="flex justify-between">
             <p class="mt-5"><small>{{ isTrashed ? 'Deleted:' : 'Posted:' }} {{ post.time }}</small></p>
             <!-- ------------------privacy here ------------- -->
