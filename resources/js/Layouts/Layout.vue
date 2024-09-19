@@ -15,6 +15,7 @@
         ]">
             <!-- Side menu content goes here -->
        <div class="absolute w-[100%] flex flex-col gap-1 m-auto top-[200px]">
+        <MenuLink name="Public" :href="route('posts.public')" component="Posts/Public"/>
         <MenuLink name="My Post" :href="route('posts.index')" component="Posts/Index"/>
         <MenuLink name="Trash" :href="route('posts.indexTrash')" component="Posts/Trash" />
        </div>

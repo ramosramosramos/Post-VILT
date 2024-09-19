@@ -27,7 +27,7 @@ class PostsServices
             ->where('isPinned', $isPinned);
         }
 
-            $posts = $posts->latest()
+            $posts=$posts->latest()
             ->get()
             ->map(function ($post) use ($time) {
                 return [

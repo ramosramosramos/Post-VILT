@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Post\CommentController;
 use App\Http\Controllers\Post\PostController;
+use App\Http\Controllers\Post\PublicPostController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
@@ -20,6 +21,8 @@ Route::middleware('auth')->group(function () {
 
     Route::post('posts/comments',[CommentController::class,'store'])->name('comments.store');
 
+    // public post
+    Route::get('public/posts',[PublicPostController::class,'index'])->name('posts.public');
 });
 
 Route::inertia('login', 'Auth/Login')->name('login');
